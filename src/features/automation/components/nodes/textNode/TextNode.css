@@ -1,0 +1,28 @@
+.text-node {
+  border: 2px solid royalblue;
+  background: #f0f8ff;
+  border-radius: 8px;
+  color: #1e3a8a;
+  overflow: hidden;
+  width: 200px;
+  position: relative; /* required for handles */
+}
+
+/* Top green navbar */
+.text-node-navbar {
+  background-color: lightgreen;
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #b3b3b3;
+}
+
+/* Content area */
+.text-node-content {
+  padding: 10px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
