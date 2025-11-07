@@ -38,7 +38,7 @@ export const EdgesProvider = ({ children }: { children: ReactNode }) => {
   const onConnect = useCallback(
     (params: Connection) =>
       setEdges((edgesSnapshot) => {
-        // ✅ Check if an edge from this source handle already exists
+        // Check if an edge from this source handle already exists
         const hasExistingEdge = edgesSnapshot.some(
           (edge) => edge.source === params.source
         );
@@ -49,7 +49,7 @@ export const EdgesProvider = ({ children }: { children: ReactNode }) => {
           return edgesSnapshot; // Do not add a new edge
         }
 
-        // ✅ Otherwise, add the edge as usual
+        // Otherwise, add the edge as usual
         return addEdge(
           {
             ...params,

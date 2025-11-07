@@ -4,7 +4,6 @@ import "./Header.css";
 
 export default function Header() {
   const { handleSave, canSave } = useHeader();
-  console.log(canSave)
   return (
     <div className="header">
       <div className="header-right">
