@@ -8,8 +8,9 @@ import {
   useMemo,
 } from "react";
 
-import { type AutomationNode } from "../../shared/types";
 import { applyNodeChanges, type NodeChange } from "@xyflow/react";
+
+import { type AutomationNode } from "../../shared/types";
 
 interface NodesContextValue {
   nodes: AutomationNode[];

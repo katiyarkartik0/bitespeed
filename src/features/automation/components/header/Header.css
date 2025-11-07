@@ -16,3 +16,17 @@
   padding: 2px;
   background-color: darkgray;
 }
+
+.header-right{
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-errorMsg{
+  background-color: pink;
+  color: black;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+}

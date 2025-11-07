@@ -1,0 +1,1 @@
+export { default as Automation } from "./pages/automation/Automation";

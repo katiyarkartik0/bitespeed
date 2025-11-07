@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
-import "./SettingsPanel.css";
 import useSettingsPanel from "../../hooks/useSettingsPanel";
+
+import "./SettingsPanel.css";
 
 export default function SettingsPanel() {
   const { selectedNode, closeSettings, handleChange } = useSettingsPanel();

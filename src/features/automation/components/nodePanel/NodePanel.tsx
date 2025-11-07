@@ -1,6 +1,8 @@
-import "./NodePanel.css";
-import { nodesDefs } from "../../utils";
 import useNodePanel from "../../hooks/useNodePanel";
+
+import { nodesDefs } from "../../utils";
+
+import "./NodePanel.css";
 
 export const NodePanel = () => {
   const { onDragStart } = useNodePanel();

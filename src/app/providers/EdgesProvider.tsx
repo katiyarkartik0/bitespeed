@@ -37,8 +37,20 @@ export const EdgesProvider = ({ children }: { children: ReactNode }) => {
   );
   const onConnect = useCallback(
     (params: Connection) =>
-      setEdges((edgesSnapshot) =>
-        addEdge(
+      setEdges((edgesSnapshot) => {
+        // ✅ Check if an edge from this source handle already exists
+        const hasExistingEdge = edgesSnapshot.some(
+          (edge) => edge.source === params.source
+        );
+        if (hasExistingEdge) {
+          console.warn(
+            `Only one edge can originate from this source handle: ${params.source}-${params.sourceHandle}`
+          );
+          return edgesSnapshot; // Do not add a new edge
+        }
+
+        // ✅ Otherwise, add the edge as usual
+        return addEdge(
           {
             ...params,
             markerEnd: {
@@ -46,8 +58,8 @@ export const EdgesProvider = ({ children }: { children: ReactNode }) => {
             },
           },
           edgesSnapshot
-        )
-      ),
+        );
+      }),
     []
   );
   return (

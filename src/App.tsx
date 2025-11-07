@@ -1,4 +1,4 @@
-import Automation from "./features/automation/pages/automation/Automation";
+import { Automation } from "./features/automation";
 import "./App.css";
 
 function App() {

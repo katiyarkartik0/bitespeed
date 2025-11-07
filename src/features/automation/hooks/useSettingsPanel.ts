@@ -1,5 +1,6 @@
 import { useNodes } from "../../../shared/hooks/useNodes";
 import { useSelectedNode } from "../../../shared/hooks/useSelectedNode";
+
 import type { ChangeEvent } from "react";
 
 export default function useSettingsPanel() {

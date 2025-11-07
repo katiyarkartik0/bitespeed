@@ -1,8 +1,10 @@
 import { Handle, Position } from "@xyflow/react";
-import "./TextNode.css";
 import { MessageCircle } from "lucide-react";
+
 import type { AutomationNode } from "../../../../../shared/types";
 import useTextNode from "../../../hooks/useTextNode";
+
+import "./TextNode.css";
 
 export default function TextNode({ id, data }: AutomationNode) {
   const { handleClick } = useTextNode();

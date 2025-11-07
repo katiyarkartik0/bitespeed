@@ -1,11 +1,13 @@
-import { MessageCircle } from "lucide-react";
-import {
-  AutomationNodeType,
-  type AutomationNode,
-  type NodeDefinition,
-} from "../../shared/types";
-import TextNode from "./components/nodes/textNode/TextNode";
 import type { XYPosition } from "@xyflow/react";
+import { MessageCircle } from "lucide-react";
+
+import TextNode from "./components/nodes/textNode/TextNode";
+
+import {
+    AutomationNodeType,
+    type AutomationNode,
+    type NodeDefinition,
+  } from "../../shared/types";
 
 export const nodesDefs = [
   {

@@ -1,13 +1,20 @@
 import useHeader from "../../hooks/useHeader";
+
 import "./Header.css";
 
 export default function Header() {
-  const { closeSettings } = useHeader();
+  const { handleSave, canSave } = useHeader();
+  console.log(canSave)
   return (
     <div className="header">
-      <button className="savebtn" onClick={closeSettings}>
-        Save changes
-      </button>
+      <div className="header-right">
+        <div>
+          {!canSave && <div className="header-errorMsg">Cannot save flow</div>}
+        </div>
+        <button className="savebtn" onClick={handleSave}>
+          Save changes
+        </button>
+      </div>
     </div>
   );
 }

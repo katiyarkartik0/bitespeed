@@ -1,11 +1,16 @@
-import { ReactFlow, type NodeTypes } from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
 import { useMemo } from "react";
-import type { NodeDefinition } from "../../../shared/types";
+import { ReactFlow, type NodeTypes } from "@xyflow/react";
+
 import { useNodes } from "../../../shared/hooks/useNodes";
 import { useEdges } from "../../../shared/hooks/useEdges";
-import { nodesDefs } from "../utils";
+
 import useDnd from "../hooks/useDnd";
+
+import { nodesDefs } from "../utils";
+
+import "@xyflow/react/dist/style.css";
+
+import type { NodeDefinition } from "../../../shared/types";
 
 function constructNodeTypes(nodesDefs: NodeDefinition[]): NodeTypes {
   const nodeTypes: NodeTypes = Object.fromEntries(
