@@ -1,18 +1,9 @@
-import { nodesDefs } from "../../helper";
 import "./NodePanel.css";
-import type { NodeDefinition } from "../../../../shared/types";
-import { useNodes } from "../../../../shared/hooks/useNodes";
+import { nodesDefs } from "../../utils";
+import useNodePanel from "../../hooks/useNodePanel";
 
 export const NodePanel = () => {
-  const { setSelectedNodeDef } = useNodes();
-
-  const onDragStart = (
-    event: React.DragEvent<HTMLButtonElement>,
-    selectedNodeDef: NodeDefinition
-  ) => {
-    setSelectedNodeDef(selectedNodeDef);
-    event.dataTransfer.effectAllowed = "move";
-  };
+  const { onDragStart } = useNodePanel();
 
   return (
     <aside>

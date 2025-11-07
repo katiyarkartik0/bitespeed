@@ -1,16 +1,11 @@
-import { Handle, Position, type NodeProps } from "@xyflow/react";
+import { Handle, Position } from "@xyflow/react";
 import "./TextNode.css";
 import { MessageCircle } from "lucide-react";
 import type { AutomationNode } from "../../../../../shared/types";
-import { useNodes } from "../../../../../shared/hooks/useNodes";
+import useTextNode from "../../../hooks/useTextNode";
 
 export default function TextNode({ id, data }: AutomationNode) {
-  const { nodes, setSelectedNode } = useNodes();
-  const handleClick = (id: string) => {
-    const selectedNode = nodes.find((node) => node.id === id) || null;
-    setSelectedNode(selectedNode);
-  };
-
+  const { handleClick } = useTextNode();
   return (
     <div className="text-node" onClick={() => handleClick(id)}>
       <div className="text-node-navbar">

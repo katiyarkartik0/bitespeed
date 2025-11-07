@@ -1,46 +1,29 @@
-import {
-  ReactFlow,
-  type Edge,
-  type OnNodesChange,
-  type OnEdgesChange,
-  type OnConnect,
-  type NodeTypes,
-} from "@xyflow/react";
+import { ReactFlow, type NodeTypes } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useCallback, useRef, type DragEventHandler } from "react";
-import type { AutomationNode } from "../../../shared/types";
+import { useMemo } from "react";
+import type { NodeDefinition } from "../../../shared/types";
+import { useNodes } from "../../../shared/hooks/useNodes";
+import { useEdges } from "../../../shared/hooks/useEdges";
+import { nodesDefs } from "../utils";
+import useDnd from "../hooks/useDnd";
 
-interface AutomationBuilderProps {
-  nodes: AutomationNode[];
-  edges: Edge[];
-  onNodesChange: OnNodesChange;
-  onEdgesChange: OnEdgesChange;
-  onConnect: OnConnect;
-  nodeTypes?: NodeTypes;
-  onDrop: DragEventHandler<HTMLDivElement>;
+function constructNodeTypes(nodesDefs: NodeDefinition[]): NodeTypes {
+  const nodeTypes: NodeTypes = Object.fromEntries(
+    nodesDefs.map(({ type, component }) => [type, component])
+  );
+  return nodeTypes;
 }
 
-export default function AutomationBuilder({
-  nodes,
-  edges,
-  onNodesChange,
-  onEdgesChange,
-  onConnect,
-  nodeTypes,
-  onDrop,
-}: AutomationBuilderProps) {
-  const reactFlowWrapper = useRef(null);
-
-  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }, []);
+export default function AutomationBuilder() {
+  const { nodes, onNodesChange } = useNodes();
+  const { edges, onEdgesChange, onConnect } = useEdges();
+  const { onDrop, onDragOver } = useDnd();
+  const nodeTypes = useMemo(() => constructNodeTypes(nodesDefs), [nodesDefs]);
 
   return (
     <div
       style={{ width: "80%", height: "100%", border: "1px solid black" }}
       className="reactflow-wrapper"
-      ref={reactFlowWrapper}
     >
       <ReactFlow
         nodes={nodes}

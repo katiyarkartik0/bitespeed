@@ -8,7 +8,6 @@ export interface AutomationNodeData extends Record<string, unknown> {
   description: string;
   nodeType: AutomationNodeType;
   prompt: string;
-  Icon: LucideIcon;
 }
 
 export interface NodeDefinition {
@@ -23,4 +22,5 @@ export interface AutomationNode extends Node<AutomationNodeData> {}
 
 export enum AutomationNodeType {
   text = "text",
+  notification = "notification"
 }
