@@ -1,21 +1,25 @@
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: start;
+.settings-header {
   border: 1px solid black;
   width: 100%;
 }
 
-.settingspanel {
+.settings-header-left{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+}
+
+.settings-panel {
   width: 20%;
 }
 
-.body{
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
+.settings-body {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
 }
 
-.text{
-    height: 140px;
+.text {
+  height: 140px;
 }

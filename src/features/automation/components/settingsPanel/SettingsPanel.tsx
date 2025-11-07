@@ -7,13 +7,15 @@ export default function SettingsPanel() {
   if (!selectedNode) return <>Node not selected</>;
 
   return (
-    <div className="settingspanel">
-      <div className="header">
-        <ArrowLeft className="back-icon" onClick={closeSettings} />
-        <span className="title">Message</span>
+    <div className="settings-panel">
+      <div className="settings-header">
+        <div className="settings-header-left">
+          <ArrowLeft className="back-icon" onClick={closeSettings} />
+          <span className="title">Message</span>
+        </div>
       </div>
 
-      <div className="body">
+      <div className="settings-body">
         <label htmlFor="prompt" className="label">
           Text
         </label>

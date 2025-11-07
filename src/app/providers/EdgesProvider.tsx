@@ -10,6 +10,7 @@ import {
 import {
   addEdge,
   applyEdgeChanges,
+  MarkerType,
   type Connection,
   type Edge,
   type EdgeChange,
@@ -36,7 +37,17 @@ export const EdgesProvider = ({ children }: { children: ReactNode }) => {
   );
   const onConnect = useCallback(
     (params: Connection) =>
-      setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
+      setEdges((edgesSnapshot) =>
+        addEdge(
+          {
+            ...params,
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+            },
+          },
+          edgesSnapshot
+        )
+      ),
     []
   );
   return (
