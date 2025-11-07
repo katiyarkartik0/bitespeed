@@ -4,17 +4,20 @@
   border-radius: 8px;
   color: #1e3a8a;
   overflow: hidden;
-  width: 200px;
+  width: 300px;
   position: relative; /* required for handles */
 }
 
 /* Top green navbar */
 .text-node-navbar {
-  background-color: lightgreen;
+  background-color: rgb(100, 169, 169);
   padding: 6px 10px;
   font-weight: 600;
   font-size: 0.9rem;
   border-bottom: 1px solid #b3b3b3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Content area */
@@ -25,4 +28,26 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.left-text-node-navbar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.whatsapp {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whatsapp svg {
+  color: #25d366;
+  width: 10px;
+  height: 10px;
 }

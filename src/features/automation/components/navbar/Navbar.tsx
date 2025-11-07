@@ -1,13 +1,12 @@
+import { useNodes } from "../../../../shared/hooks/useNodes";
 import "./Navbar.css";
 
-export default function Navbar({
-  setEditNodeId,
-}: {
-  setEditNodeId: React.Dispatch<React.SetStateAction<string | null>>;
-}) {
+export default function Navbar() {
+  const { setSelectedNode } = useNodes();
+  const closeSettings = () => setSelectedNode(null);
   return (
     <div className="navbar">
-      <button className="savebtn" onClick={() => setEditNodeId(null)}>
+      <button className="savebtn" onClick={closeSettings}>
         Save changes
       </button>
     </div>

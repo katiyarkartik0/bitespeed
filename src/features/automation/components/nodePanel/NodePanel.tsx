@@ -1,34 +1,38 @@
-import { createNode, nodesDefs } from "../../helper";
+import { nodesDefs } from "../../helper";
 import "./NodePanel.css";
-import { MessageCircle } from "lucide-react";
-import { NodeType, type AutomationNode } from "../../types";
+import type { NodeDefinition } from "../../../../shared/types";
+import { useNodes } from "../../../../shared/hooks/useNodes";
 
-export const NodePanel = ({
-  setNodes,
-}: {
-  setNodes: React.Dispatch<React.SetStateAction<AutomationNode[]>>;
-}) => {
-  const handleAddNode = (def: (typeof nodesDefs)[number]) => {
-    setNodes((prev) => [...prev, createNode({ def })]);
+export const NodePanel = () => {
+  const { setSelectedNodeDef } = useNodes();
+
+  const onDragStart = (
+    event: React.DragEvent<HTMLButtonElement>,
+    selectedNodeDef: NodeDefinition
+  ) => {
+    setSelectedNodeDef(selectedNodeDef);
+    event.dataTransfer.effectAllowed = "move";
   };
+
   return (
-    <div className="panel">
-      {nodesDefs.map((def) => {
-        if (def.type === NodeType.text) {
+    <aside>
+      <div className="panel">
+        {nodesDefs.map((def) => {
           return (
             <button
               key={def.type}
               type="button"
-              className="node-box"
+              className="node-box dndnode input"
               title={def.label ?? def.type}
-              onClick={() => handleAddNode(def)}
+              onDragStart={(event) => onDragStart(event, def)}
+              draggable
             >
-              <MessageCircle color="blue" />
+              <def.Icon color="blue" />
               <span className="node-label">{def.label ?? def.type}</span>
             </button>
           );
-        }
-      })}
-    </div>
+        })}
+      </div>
+    </aside>
   );
 };

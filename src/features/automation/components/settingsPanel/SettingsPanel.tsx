@@ -1,46 +1,39 @@
 import { ArrowLeft } from "lucide-react";
+
+import { type ChangeEvent } from "react";
 import "./SettingsPanel.css";
-import { useEffect, useState } from "react";
-import type { AutomationNode } from "../../types";
+import { useNodes } from "../../../../shared/hooks/useNodes";
 
-interface SettingsPanelProps {
-  setNodes: React.Dispatch<React.SetStateAction<AutomationNode[]>>;
-  editNode: AutomationNode;
-  closeSettings: () => void;
-}
+export default function SettingsPanel() {
+  const { selectedNode, setSelectedNode, setNodes } = useNodes();
 
-export default function SettingsPanel({
-  editNode,
-  setNodes,
-  closeSettings,
-}: SettingsPanelProps) {
-  const [editPrompt, setEditPrompt] = useState("");
+  if (!selectedNode) return <>No node selected</>;
 
-  useEffect(() => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (!selectedNode) return;
+    setSelectedNode((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        data: { ...prev?.data, prompt: e.target.value },
+      };
+    });
     setNodes((prevNodes) =>
       prevNodes.map((node) =>
-        node.id === editNode.id
+        node.id === selectedNode.id
           ? {
               ...node,
               data: {
                 ...node.data,
-                prompt: editPrompt,
+                prompt: e.target.value,
               },
             }
           : node
       )
     );
-  }, [editPrompt]);
+  };
 
-  if (!editNode) {
-    return (
-      <div className="settingspanel">
-        <div className="header">
-          <span>No node selected</span>
-        </div>
-      </div>
-    );
-  }
+  const closeSettings = () => setSelectedNode(null);
 
   return (
     <div className="settingspanel">
@@ -56,8 +49,8 @@ export default function SettingsPanel({
         <textarea
           id="prompt"
           className="text"
-          value={editPrompt}
-          onChange={(e) => setEditPrompt(e.target.value)}
+          value={selectedNode.data.prompt}
+          onChange={handleChange}
           placeholder="Enter message text..."
         />
       </div>

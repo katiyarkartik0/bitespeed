@@ -1,47 +1,61 @@
 import AutomationBuilder from "../../components/AutomationBuilder";
-import Navbar from "../../components/navbar/Navbar";
 import { NodePanel } from "../../components/nodePanel/NodePanel";
 
-import type { NodeTypes } from "@xyflow/react";
-import { nodesDefs } from "../../helper";
-import useNode from "../../hooks/useNode";
-import useEdge from "../../hooks/useEdge";
+import { useReactFlow, type NodeTypes } from "@xyflow/react";
 
 import "./Automation.css";
 import SettingsPanel from "../../components/settingsPanel/SettingsPanel";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
+import { useNodes } from "../../../../shared/hooks/useNodes";
+import { useEdges } from "../../../../shared/hooks/useEdges";
+import type { NodeDefinition } from "../../../../shared/types";
 
-function constructNodeTypes({
-  setEditNodeId,
-}: {
-  setEditNodeId: React.Dispatch<React.SetStateAction<string | null>>;
-}): NodeTypes {
+function constructNodeTypes(nodesDefs: NodeDefinition[]): NodeTypes {
   const nodeTypes: NodeTypes = Object.fromEntries(
-    nodesDefs.map(({ type, component }) => {
-      return [type, (props) => component({ ...props, setEditNodeId })];
+    nodesDefs.map(({ type, component: NodeComponent }) => {
+      console.log(NodeComponent)
+      return [type, NodeComponent];
     })
   );
   return nodeTypes;
 }
 
 export default function Automation() {
-  const [editNodeId, setEditNodeId] = useState<string | null>(null);
-  const { nodes, onNodesChange, setNodes } = useNode();
-  const { edges, onEdgesChange, onConnect } = useEdge();
-  const nodeTypes = useMemo(
-    () => constructNodeTypes({ setEditNodeId }),
-    [setEditNodeId]
+  const {
+    nodes,
+    onNodesChange,
+    setNodes,
+    selectedNodeDef,
+    selectedNode,
+    nodesDefs,
+    createNode,
+  } = useNodes();
+  const { edges, onEdgesChange, onConnect } = useEdges();
+  const nodeTypes = useMemo(() => constructNodeTypes(nodesDefs), [nodesDefs]);
+  const { screenToFlowPosition } = useReactFlow();
+
+  const onDrop = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (!selectedNodeDef) {
+        return;
+      }
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      setNodes((prev) => [
+        ...prev,
+        createNode({ def: selectedNodeDef, position }),
+      ]);
+    },
+    [screenToFlowPosition, selectedNodeDef]
   );
-
-  const editNode = useMemo(() => {
-    return nodes.find((n) => n.id === editNodeId);
-  }, [nodes, editNodeId]);
-
-  const closeSettings = () => setEditNodeId(null);
 
   return (
     <div className="page">
-      <Navbar setEditNodeId={setEditNodeId} />
+      {/* <Navbar setEditNodeId={setEditNodeId} /> */}
       <div className="workspace">
         <AutomationBuilder
           {...{
@@ -51,17 +65,10 @@ export default function Automation() {
             onEdgesChange,
             onConnect,
             nodeTypes,
+            onDrop,
           }}
         />
-        {editNode ? (
-          <SettingsPanel
-            setNodes={setNodes}
-            editNode={editNode}
-            closeSettings={closeSettings}
-          />
-        ) : (
-          <NodePanel setNodes={setNodes} />
-        )}
+        {selectedNode ? <SettingsPanel /> : <NodePanel />}
       </div>
     </div>
   );
